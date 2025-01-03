@@ -141,7 +141,8 @@ export function mergeHighOverlapNodes(nodes) {
 
       const n2 = nodes[j];
       const { x: x2, y: y2, w: w2, h: h2, br: br2, wg: wg2 } = n2;
-
+       
+      const overlaped=(x2<(x1+w1))||(y2<(y1+h1))||(Math.abs(x2-x1-w1)<2)||(Math.abs(y2-y1-h1)<2);
       // 计算重叠度
       const xOverlap = Math.max(
         0,
@@ -154,7 +155,9 @@ export function mergeHighOverlapNodes(nodes) {
       const overlap =
         (xOverlap * yOverlap) / (w1 * h1 + w2 * h2 - xOverlap * yOverlap);
 
-      if (overlap > 0.8) {
+      // if (overlap > 0.1) {
+      if(overlaped){
+ 
         // 合并节点
         n1 = {
           x: Math.min(x1, x2),

@@ -78,8 +78,8 @@ export default function generateSkeleton(root) {
  
  
     const { innerWidth, innerHeight } = window;
-    // 必须符合要求的元素才渲染：有大小，并且在视图内;
-    if (width > 5 && height > 5 && top < innerHeight && left < innerWidth&&(left+width)<innerWidth) {
+    // 必须符合要求的元素才渲染：有大小，并且在视图内;&& top < innerHeight
+    if (width > 5 && height > 5 && left < innerWidth&&(left+width)<innerWidth) {
       width = Number(((width / innerWidth) * 100).toFixed(2));
       height =Number( ((height / innerHeight) * 100).toFixed(2)) ;
       left = Number(((left / innerWidth) * 100).toFixed(2));
@@ -163,24 +163,24 @@ export default function generateSkeleton(root) {
     const xGap=Math.abs(x1+w1-x2);
     const yGap=Math.abs(y1+h1-y2)
     console.log(node.parentElement.className,x1+w1-x2,y1+h1-y2,x1,w1,y1,h1,xGap,yGap,x2,y2,'xGapYgap',pid,previousDivInfo.pid)
-    if ((xGap<0.5||yGap<0.5)&&pid==previousDivInfo.pid) {
+    // if ((xGap<0.5||yGap<0.5)&&pid==previousDivInfo.pid) {
 
-      //相同层级
-      // 合并节点
-     let n1 = {
-        x: Math.min(x1, x2),
-        y: Math.min(y1, y2),
-        w: Math.max(x1 + w1, x2 + w2) - Math.min(x1, x2),
-        h: Math.max(y1 + h1, y2 + h2) - Math.min(y1, y2),
-      };
-      SkeBoxes[SkeBoxes.length - 1] = {
-        position: n1,
-        borderRadius: Math.max(borderRadius1, borderRadius), //都使用第一个borderRaduis
-        skeId,
-        pid,
-      };
-      return;
-    }
+    //   //相同层级
+    //   // 合并节点
+    //  let n1 = {
+    //     x: Math.min(x1, x2),
+    //     y: Math.min(y1, y2),
+    //     w: Math.max(x1 + w1, x2 + w2) - Math.min(x1, x2),
+    //     h: Math.max(y1 + h1, y2 + h2) - Math.min(y1, y2),
+    //   };
+    //   SkeBoxes[SkeBoxes.length - 1] = {
+    //     position: n1,
+    //     borderRadius: Math.max(borderRadius1, borderRadius), //都使用第一个borderRaduis
+    //     skeId,
+    //     pid,
+    //   };
+    //   return;
+    // }
     SkeBoxes.push(newNodeInfo);
   }
 
@@ -219,7 +219,7 @@ export default function generateSkeleton(root) {
       reg = true;
     }
     // 隐藏所有 svg 元素
-    if (node.tagName === "svg") {
+    if (node.tagName === "svg"||node.tagName === "i"||node.tagName === "I") {
       reg = true;
     }
 
@@ -256,6 +256,20 @@ export default function generateSkeleton(root) {
   }
 
   let getIsVisible=function(node){
+    if(!node||node.nodeType !== Node.ELEMENT_NODE){
+      return
+    }
+  const parentElement=node.parentElement;
+  if(!parentElement||!node){
+    return
+  }
+  const {top:pT,left:pL,right:pR,bottom:pB}=parentElement.getBoundingClientRect();
+  const {top:t,left:l,right:r,bottom:b}=node.getBoundingClientRect();
+  
+  if(!(t>=pT&&l>=pL&&r<=pR&&b<=pB)){
+ 
+     return
+  }
   const style=window.getComputedStyle(node);
   const isVisible = style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0' && node.offsetWidth > 0 && node.offsetHeight > 0;
   return isVisible;

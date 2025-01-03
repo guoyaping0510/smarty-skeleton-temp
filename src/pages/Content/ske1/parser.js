@@ -53,9 +53,10 @@ export function parse(containerEl) {
     if (
       tagName === 'IMG' ||
       tagName === 'INPUT' ||
-      (children.length === 0 && innerHTML !== '') ||
-      backgroundImage !== 'none' ||
-      backgroundColor !== 'rgba(0, 0, 0, 0)'
+      (children.length === 0 && innerHTML !== '')
+      //  ||
+      // backgroundImage !== 'none' ||
+      // backgroundColor !== 'rgba(0, 0, 0, 0)'
     ) {
       const w = Math.floor(width);
       const h = Math.floor(height);

@@ -1,8 +1,8 @@
 import { genSkeletonCss, getHtmlAndStyle } from './skeleton';
 import { htmlFilter, getClonedContainerEl } from './utils';
-// import evalDOM from './evalDOM'
-import {preview} from './ske1'
-import generateSkeleton from './ske5'
+import evalDOM from './evalDOM'
+// import {preview} from './ske1'
+import smartySkeleton from './ske7'
 let queryInfo = null;
 let containerEl = null;
 let clonedContainerEl = null;
@@ -12,14 +12,19 @@ let displayStyle = '';
 chrome.runtime.onMessage.addListener(async function(req, sender, sendRes) {
   switch (req.type) {
     case 'generate':
-      console.log('inittest');
-      generateSkeleton(document.getElementById('icestarkNode')||document.getElementById('root'))
+      // console.log('inittest');
+      const { containerId } = req.data;
+      const id=document.getElementById(containerId);
+      console.log(id,'id123')
+      smartySkeleton(id)
+      return
+      smartySkeleton(document.getElementById('icestarkNode')||document.getElementById('root'))||document.getElementById('ROOT')
       // preview()
       // evalDOM();
       return;
-      const { containerId } = req.data;
-      queryInfo = req.data;
-      containerEl = document.querySelector(containerId);
+      // const { containerId } = req.data;
+      // queryInfo = req.data;
+      // containerEl = document.querySelector(containerId);
        
       // 如果找不到元素，就返回null
       if (!containerEl) {

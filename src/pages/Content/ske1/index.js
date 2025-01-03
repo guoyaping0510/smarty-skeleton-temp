@@ -1,6 +1,6 @@
-import { parse } from './parser';
-import { mergeHighOverlapNodes, mergePosition, weightNode } from './toolkit';
- 
+import { parse } from "./parser";
+import { mergeHighOverlapNodes, mergePosition, weightNode } from "./toolkit";
+
 /**
  * 用于创建预览骨架屏 dom 节点
  * @param {*} sks
@@ -25,9 +25,9 @@ function createSkeleton(data) {
   .skeleton {
     background: linear-gradient(
       90deg,
-      hsla(0, 0%, 74.5%, 0.2) 25%,
-      hsla(0, 0%, 50.6%, 0.24) 37%,
-      hsla(0, 0%, 74.5%, 0.2) 63%
+      hsla(0, 0%, 74.5%, 0.2) 5%,
+      hsla(0, 0%, 50.6%, 0.24) 50%,
+      hsla(0, 0%, 74.5%, 0.2) 90%
     );
     background-size: 400% 100%;
     position: absolute;
@@ -37,23 +37,26 @@ function createSkeleton(data) {
   const { children, container } = data;
 
   const skeletonEl = children.reduce((acc, cur) => {
+    //opacity: ${cur.wg};
     return (
       acc +
-      `<div class="skeleton animated" style="opacity: ${cur.wg};top: ${cur.y}px; left: ${cur.x}px; width: ${
-        cur.w
-      }px; height: ${cur.h}px;border-radius: ${cur.br || 0}"></div>`
+      `<div class="skeleton animated" style="top: ${cur.y}px; left: ${
+        cur.x
+      }px; width: ${cur.w}px; height: ${cur.h}px;border-radius: ${
+        cur.br || 0
+      }"></div>`
     );
-  }, '');
+  }, "");
 
   const skeletonDom = `
   <style>${skeletonStyle}</style>
   ${skeletonEl}
   `;
 
-  const previewDom = document.createElement('div');
+  const previewDom = document.createElement("div");
   const { x, y, w, h } = container;
   previewDom.setAttribute(
-    'style',
+    "style",
     `position:absolute;width:${w}px;height:${h}px;left:${x}px;top:${y}px;z-index:999999;`
   );
   previewDom.innerHTML = `${skeletonDom}`;
@@ -64,12 +67,12 @@ function createSkeleton(data) {
  * 预览
  * @param {*} sks
  */
-export function preview(time= 5) {
+export function preview(time = 5) {
   // if (!el) {
   //   console.error('节点不存在');
   //   return;
   // }
-  const el=document.body;
+  const el = document.body;
   const skeletonSource = generate(el);
   const skeletonDom = createSkeleton(skeletonSource);
   // 创建一个预览容器大小位置跟 container 保持一致
@@ -97,7 +100,7 @@ export function preview(time= 5) {
  * @return {*}
  */
 export function generate(dom) {
-  let { container, children: nodes } = parse(dom)||{};
+  let { container, children: nodes } = parse(dom) || {};
 
   nodes = mergePosition(nodes);
   nodes = mergeHighOverlapNodes(nodes);
