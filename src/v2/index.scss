@@ -1,0 +1,48 @@
+.ske-wrap {
+  position: relative;
+  --width: 'auto';
+  --height: 'auto';
+  // --bg: '#f4f4f4';
+  // background: var(--bg);
+  width: var(--width);
+  height: var(--height);
+  transition: all 0.3s;
+  
+  &.loadingWithCache{
+    .ske-real-dom{
+      opacity: 0;
+    }
+  }
+  &.loaded {
+    .ske-innerwrap {
+      animation: fade-out 0.5s forwards;
+    }
+  }
+  .ske-innerwrap {
+    opacity: 1;
+    z-index: 1111;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+/* 定义动画名为fade-out */
+@keyframes fade-out {
+  0% {
+    opacity: 1; /* 起始时完全不透明 */
+    background: transparent;
+  }
+  50% {
+    opacity: 0.5; /* 起始时完全不透明 */
+    background: transparent;
+  }
+  100% {
+    opacity: 0; /* 结束时完全透明 */
+    z-index: -1111;
+    background: transparent;
+    display: none;
+  }
+}
