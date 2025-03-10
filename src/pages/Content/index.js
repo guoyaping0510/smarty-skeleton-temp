@@ -2,7 +2,7 @@ import { genSkeletonCss, getHtmlAndStyle } from './skeleton';
 import { htmlFilter, getClonedContainerEl } from './utils';
 import evalDOM from './evalDOM'
 // import {preview} from './ske1'
-import smartySkeleton from './ske7'
+import smartySkeleton from './ske8'
 let queryInfo = null;
 let containerEl = null;
 let clonedContainerEl = null;

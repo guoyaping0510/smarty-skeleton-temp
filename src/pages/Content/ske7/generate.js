@@ -327,15 +327,10 @@ export default class generateSkeleton {
       return;
     }
     //只处理tag和文本类型
-    console.log(node.nodeType,'node.nodeType')
     if (
-      ![Node.ELEMENT_NODE, Node.TEXT_NODE].includes(node.nodeType)||(node.nodeType===3&&!node.textContent.trim().length)) {
+      ![Node.ELEMENT_NODE, Node.TEXT_NODE].includes(node.nodeType)||(node.nodeType===Node.TEXT_NODE&&!node.textContent.trim().length)) {
       return;
     }
-    // if(node.nodeType===3){
-    //   console.log(node,'node')
-    //   debugger
-    // }
     if (!this.getIsVisible(node)) {
       //本身元素不可见或不在父元素范围内
       return;
